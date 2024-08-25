@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css?family=Noto%20Znamenny%20Musical%20Notation:700|Noto%20Znamenny%20Musical%20Notation:400");
+
+body {
+  font-family: "Noto Znamenny Musical Notation";
+  font-weight: 400;
+  background-color: var(--background);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body label {
+  color: var(--text);
+}
+body input {
+  color: var(--text);
+}
+.loginInput[type="text"],
+.loginInput[type="password"] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  /* display: inline-block; */
+  border: 2px solid var(--accent);
+  box-sizing: border-box;
+  background-color: var(--accent);
+  border-radius: 5px;
+}
+#login-container {
+    background: var(--container-bg-color);
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Noto Znamenny Musical Notation";
+  font-weight: 700;
+}
+
+html {
+  font-size: 100%; /* 16px */
+}
+
+h1 {
+  font-size: 7.595rem; /* 121.44px */
+  color: var(--text);
+}
+
+h2 {
+  font-size: 5.063rem; /* 80.96px */
+  color: var(--text);
+}
+
+h3 {
+  font-size: 3.375rem; /* 54.08px */
+  color: var(--text);
+}
+
+h4 {
+  font-size: 2.25rem; /* 36px */
+  color: var(--text);
+}
+
+h5 {
+  font-size: 1.5rem; /* 24px */
+  color: var(--text);
+}
+
+small {
+  font-size: 0.667rem; /* 10.72px */
+  color: var(--text);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --text: rgb(2, 20, 39);
+    --background: rgb(245, 249, 255);
+    --primary: rgb(5, 52, 128);
+    --secondary: rgb(248, 89, 198);
+    --accent: rgb(40, 112, 189);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: rgb(218, 235, 253);
+    --background: rgb(0, 5, 12);
+    --primary: rgb(125, 173, 250);
+    --secondary: rgb(165, 7, 115);
+    --accent: rgb(64, 136, 214);
+  }
+}
+:root {
+  font-family: "Inter", ui-sans-serif;
+  --font-scale: 1.333;
+  --p: 1rem;
+  --h5: calc(var(--p) * var(--font-scale));
+  --h4: calc(var(--h5) * var(--font-scale));
+  --h3: calc(var(--h4) * var(--font-scale));
+  --h2: calc(var(--h3) * var(--font-scale));
+  --h1: calc(var(--h2) * var(--font-scale));
+  --small: calc(var(--p) / var(--font-scale));
+
+  --margin-lg: 0 12%;
+  --margin-md: 0 6%;
+
+  --border1: 1rem;
+  --border05: 0.5rem;
+}
+#header {
+  overflow: hidden;
+  padding: 20px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#header a {
+  float: left;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  border-radius: 4px;
+  color: var(--text);
+}
+#header-right {
+  float: right;
+  line-height: 30px;
+}
+
+#header a:hover {
+  transform: scale(1.17); /* Increase the size by 10% */
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.3s ease-in-out; /* Add a smooth transition effect */
+}
+
+@media screen and (max-width: 510px) {
+  #header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  #header-right {
+    float: none;
+  }
+}
+.logotext {
+  font-size: var(--h2);
+  background: linear-gradient(120deg, var(--primary), var(--secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 50px;
+}
