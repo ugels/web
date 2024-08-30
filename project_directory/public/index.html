@@ -1,28 +1,497 @@
+<!-- Index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: rgb(7, 8, 8)">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ugels</title>
     <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <html lang="en"></html>
+    <title>Ugels</title>
     <link
       rel="icon"
       type="image/x-icon"
       href="/img/favicon.svg"
       sizes="16x16"
     />
-    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header id="header">
-      <b href="https://ugels.com" class="logotext">Ugels.com</b>
-      <div id="header-right">
-        <a class="active" href="/">Home</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
+    <!-- Header is permanent unless hidden with javascript and will therefore always be shown -->
+    <div id="header">
+      <!-- Logo simply contains the logo png -->
+      <!-- <div id="logo">AHU</div> Temp removed -->
+      <!-- Myname is my name so in this case it will be Andreas Høiås Ugelstad, this way i can change and move it around seperatly -->
+      <div id="myname">Ugels.com</div>
+      <button id="theme-changer" onclick="changetheme()">Change theme</button>
+      <!-- Navbar is for navigating around the page, right now the website starts at home-screen everything will be linked with javascript -->
+      <div id="navbar">
+        <button id="navbar-home" onclick="homeclicked()">Home</button>
+        <!-- <button id="navbar-about" onclick="aboutclicked()">About</button> -->
+        <button id="navbar-projects" onclick="projectsclicked()">
+          Projects
+        </button>
+        <button id="navbar-qualifications" onclick="qualificationsclicked()">
+          Qualifications
+        </button>
       </div>
-    </header>
-    <h1>Hello, World!</h1>
+    </div>
+    <div id="screens">
+      <div id="home-screen">
+        <!-- Will add images, text and video into the paragraphs below -->
+        <div id="home-intro">
+          <h1>I'm Andreas Høiås Ugelstad</h1>
+          <div id="title">16 Year Old IT Student</div>
+
+          <p>
+            I'm a passionate software engineer with a keen interest in web
+            development. Currently pursuing a degree in Computer Science in
+            Norway, and i am eager to continue my journey in IT and explore new
+            horizons.
+          </p>
+
+          <!-- same image, no blur -->
+
+          <!-- content -->
+          <div id="Portofolio-img-container">
+            <img
+              id="Portofolio-img"
+              src="images/me.gif"
+              alt="Full body image of Andreas H Ugelstad"
+            />
+            <img
+              id="Portofolio-img-blur"
+              src="images/me.gif"
+              alt="Full body image of Andreas H Ugelstad"
+            />
+          </div>
+        </div>
+        <div id="home-par2"></div>
+        <div id="home-par3"></div>
+        <div id="home-par4"></div>
+        <div id="home-par5"></div>
+        <!-- Going to add more paragraphs -->
+      </div>
+      <div id="about-screen">
+        <div id="about-title">
+          <h1>About me</h1>
+          <p>
+            I was born in Elverum, Norway. And moved shortly after to Horten,
+            which is where i am still residing to this day
+          </p>
+          <p>
+            I have developed a great interest in the digital world, and you can
+            often find me infront of my pc where i will be trying to either make
+            something to challenge myself, or just playing games with friends
+          </p>
+        </div>
+        <div id="about-par1">
+          <h2>That's it?</h2>
+          <p>
+            No, my story is more than just where I live. Let's dvelve into the
+            beginning and explore my journey that unfolds over time.
+          </p>
+          <div id="myjourney">
+            <h2>My journey</h2>
+            <!-- Infobox 1: Early Years -->
+            <div class="infobox">
+              <h3>Early Years</h3>
+              <p>
+                Born in Elverum, Norway, and later moved to Horten. Horten is
+                the definition of home to me, all the good memories and tired
+                days after bicycling to school
+              </p>
+              <p>
+                Now i think i could probably trace my interest in technology
+                back to when i got my first pc. I was so excited because it came
+                with a copy of StarCraft II which i had watched my dad play
+              </p>
+              <p>
+                This first laptop introduced me to the wonderful world of
+                technology, now i had no clue how to do anything as the onyl
+                thing i had used before that was an ipad. But i tried my best to
+                learn this new system
+              </p>
+              <p>
+                After some time on the pc i decided i wanted to Learn Scratch. A
+                box-coding language based in the browser, and seeing my
+                enthusiasm my dad signed me up for a local scratch course which
+                i attended and quickly mastered
+              </p>
+              <p>
+                Scratch felt pretty limiting at the time, because i wanted to
+                make my own game. But because all the big programming languages
+                looked so scary to learn i postponed my coding adventure
+              </p>
+
+              <!-- Additional details about your early life -->
+            </div>
+
+            <!-- Infobox 2: Passion for Digital World -->
+            <div class="infobox">
+              <h3>Passion for the Digital World</h3>
+              <p>
+                I felt like the laptop i had started with put a limit to what i
+                could achieve, so i saved up money and bought parts for a "real"
+                computer
+              </p>
+              <p>
+                With help from my dad i put the pc components together and got
+                the pc running
+              </p>
+              <p>
+                From this point on i got completely addicted to the digital
+                world. I started as a news-paper boy so i could earn money to
+                buy a vr headset when i was 13
+              </p>
+              <p>
+                I also steadily upgraded my pc with better parts so that i could
+                run more programs, and play new games with increased performane
+                in the company of my friends
+              </p>
+              <p>
+                I poured many hours into playing games with friends. I even
+                started modding some of them like Minecraf and Terraria, and
+                while playing i also put some time away to increase my digital
+                skills
+              </p>
+              <p>
+                This led me to unlock many new possibilites and make a lot of
+                new friends, and in 9th grade i found the game Rust
+              </p>
+              <p>
+                Rust helped me develop my leadership skills and my technical
+                capabilites. Me and two of my friends started a Group named GMB
+                where we often lead 20-30 people in Rust
+              </p>
+              <p>
+                I also developed a Discord bot that we added to our server to
+                calculate expenses in rust, examples of this could be how much
+                sulfur we would need create 10 rockets
+              </p>
+              <p>
+                At the end of secondary school i discovered how much i enjoy
+                Cyber Security. And i made an encryption service in python that
+                used AND encryption to encrypt/decrypt inputed messages
+              </p>
+              <!-- Details about your digital endeavors and hobbies -->
+            </div>
+
+            <!-- Infobox 3: Current Endeavors - Videregående Skole -->
+            <div class="infobox">
+              <h3>Current Endeavors - Videregående Skole</h3>
+              <p>
+                Currently attending Horten videregående skole, in the
+                Informational Technology and Media Production line.
+              </p>
+              <p>
+                I choose the IT and MP line because it allowed me to further
+                grow my intrest in IT.
+              </p>
+              <p>
+                However something unexpected happend, i also really enjoyed the
+                Media Porducation. Where we would plan filming and film projects
+              </p>
+              <p>
+                My time at Horten Vgs has really taught me how to work on
+                projects as a group and time management
+              </p>
+              <p>
+                I have also always tought of education as an important part of
+                my future so when i first started VGS i took T1 mathematics as a
+                private person (privatist).
+              </p>
+              <p>
+                Taking T1 math really put me to the test, i had to study without
+                any teacher's guidance and on my freetime. On top of that i only
+                had just above 2 months to learn an enitre corriculum
+              </p>
+              <!-- Information about your studies and goals -->
+            </div>
+
+            <!-- Infobox 4: Future Aspirations -->
+            <div class="infobox">
+              <h3>Future Aspirations</h3>
+              <p>
+                Looking forward to further educational pursuits, career goals,
+                and personal achievements.
+              </p>
+              <!-- Your plans and aspirations for the future -->
+            </div>
+
+            <!-- Add more infoboxes for other significant periods -->
+          </div>
+        </div>
+        <div id="about-par2"></div>
+        <!-- Going to mabye add more paragraphs -->
+      </div>
+      <div id="projects-screen">
+        <div id="projects-title">Projects I have worked on</div>
+        <div id="project1">
+          <div id="project1-header">CarbonClicker</div>
+          <div id="project1-maintext">
+            CarbonClicker is a collaborative web-based game project focused on
+            raising awareness about environmental issues, particularly carbon
+            emissions and climate change. Serving as a back-end developer for
+            the project, I contributed to creating a real-time multiplayer
+            experience where players could join teams representing either oxygen
+            or carbon dioxide. The game simulates the battle between these two
+            elements, with players working together to reduce carbon emissions
+            or increase oxygen levels.
+          </div>
+          <img
+            id="main-screen"
+            src="images/carbonclicker/main-screen.png"
+            alt="The Main screen of carbon clicker"
+          />
+          <a id="trycarbon" href="http://62.209.94.138:25565/"
+            >Try CarbonClicker</a
+          >
+        </div>
+        <div id="project2">
+          <div id="project2-header">Inchify</div>
+          <div id="project2-maintext">
+            Inchify is a user-friendly app designed to alleviate the confusion
+            surrounding measurement choices and their application. Developed by
+            myself and a group of friends during our time in school, Inchify
+            simplifies the process of selecting and utilizing measurements.
+            Created using Figma, the experience of building it has been a
+            significant learning journey for me
+          </div>
+          <img
+            id="inchify-mainscreen"
+            src="images/carbonclicker/inchify-mainscreen.png"
+            alt="The main screen of Inchify"
+          />
+          <img
+            id="inchify-weightscreen"
+            src="images/carbonclicker/inchify-weightscreen.png"
+            alt="The weight conversion screen of Inchify"
+          />
+          <img
+            id="inchify-weightmenu"
+            src="images/carbonclicker/inchify-weightmenu.png"
+            alt="The menu at the weight conversion screen of Inchify"
+          />
+
+          <div id="projects-title2">Media projects</div>
+        </div>
+        <div id="project3">
+          <div id="project3-header">Images</div>
+          <div id="fotodag-img-cont">
+            <div id="simen22222">
+              <img src="images/fotodag/IMG_8361.gif" alt="" />
+              <img src="images/fotodag/IMG_8481.gif" alt="" />
+              <img src="images/fotodag/IMG_8673.gif" alt="" />
+              <img src="images/fotodag/IMG_8722.gif" alt="" />
+              <img src="images/fotodag/IMG_8730.gif" alt="" />
+            </div>
+            <div id="simen1">
+              <img src="images/fotodag/IMG_8760.gif" alt="" />
+              <img src="images/fotodag/IMG_8833.gif" alt="" />
+              <img src="images/fotodag/IMG_8857.gif" alt="" />
+              <img src="images/fotodag/IMG_8860.gif" alt="" />
+              <img src="images/fotodag/IMG_8869.gif" alt="" />
+            </div>
+          </div>
+          <!-- <button id="project3-images-button"onclicked="show-media-images">Click Me!</button> -->
+        </div>
+        <div id="project4">
+          <div id="project4-header">Videos i have worked on</div>
+          <video
+            class="project-video"
+            id="hbs-video"
+            src="videos/HBS.mp4"
+            controls
+          ></video>
+          <div id="hbs-text">
+            <div id="hbs-text-header">Horten Bygg Service - AD</div>
+            <div id="hbs-text-main">
+              I spearheaded the production and direction of an advertising
+              campaign for Horten Bygg Service, a prominent carpentry company.
+              Our goal was to showcase their expertise and services while
+              capturing the essence of craftsmanship and reliability.
+              Collaborating closely with a dedicated team, we meticulously
+              crafted a narrative that highlighted the company's commitment to
+              quality and customer satisfaction.
+            </div>
+          </div>
+        </div>
+        <div id="project5">
+          <video
+            class="project-video"
+            id="mms-video"
+            src="videos/MMS.mp4"
+            controls
+          ></video>
+          <div id="mms-text">
+            <div id="mms-text-header">Medie, Makt og Samfunn</div>
+            <div id="mms-text-main">
+              Medie, Makt og Samfunn was made based on the educational contents
+              on NDLA.no. Our goal was to inform people of the dangers of media
+              nad missue of media. I was the producer and Director of this
+              project along with also having some acting roles.
+            </div>
+          </div>
+        </div>
+        <div id="project6">
+          <div id="project6-header">Links to other Videos</div>
+          <div id="linkcont">
+            <a
+              id="link"
+              href="https://www.youtube.com/@iktmediaHortenVGS/videos"
+            >
+              1IMA Videos
+            </a>
+            <a
+              id="tutorialslink"
+              href="https://www.youtube.com/@HortenVGSTutorials/videos"
+              >Horten VGS Tutorials</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="qualifications-screen">
+      <div id="qualifications-title">Qualifications</div>
+      <div id="qualifications-skryt">
+        "My interests in computer science and Math has made me a valued
+        companion in any class. Which can be seen as in my first year of VGS i
+        took the hardest first year maths class on my own after only two months
+        into the semester. Taking T1 maths alone without a teacher taught me the
+        value of effort and time management"
+      </div>
+      <div id="qualifications-container-main">
+        <div id="javascript-logo-container">
+          <img
+            class="qualifications-logo"
+            src="images/logos/javascript.svg"
+            alt="Javascript logo"
+            id="javascript-logo"
+          />
+          <div class="qualifications-text" id="qualifications-javascript-text">
+            Javascript is what i usually work with, i have learnt to be
+            effective and make optimal code
+          </div>
+          <img
+            class="qualifications-logo"
+            src="images/logos/javascript.svg"
+            alt="Javascript logo"
+            id="javascript-logo-blur"
+          />
+        </div>
+        <div id="node-logo-container">
+          <img
+            class="qualifications-logo"
+            src="images/logos/NodeJS.svg"
+            alt="NodeJS logo"
+            id="node-logo"
+          />
+          <div class="qualifications-text" id="qualifications-node-text">
+            NodeJS was used in my CarbonClicker project which greatly increased
+            my programing competence
+          </div>
+          <img
+            class="qualifications-logo"
+            src="images/logos/NodeJS.svg"
+            alt="NodeJS logo"
+            id="node-logo-blur"
+          />
+        </div>
+        <div id="html-logo-container">
+          <img
+            class="qualifications-logo"
+            src="images/logos/HTML5.svg"
+            alt="HTML5 logo"
+            id="html-logo"
+          />
+          <div class="qualifications-text" id="qualifications-html-text">
+            I have built multiple websites using HTML, which made me very
+            competent
+          </div>
+          <img
+            class="qualifications-logo"
+            src="images/logos/HTML5.svg"
+            alt="HTML5 logo"
+            id="html-logo-blur"
+          />
+        </div>
+        <div id="css-logo-container">
+          <img
+            class="qualifications-logo"
+            src="images/logos/CSS3.svg"
+            alt="CSS3 logo"
+            id="css-logo"
+          />
+          <div class="qualifications-text" id="qualifications-css-text">
+            I have used CSS to build multiple websites, which made me very
+            competent
+          </div>
+          <img
+            class="qualifications-logo"
+            src="images/logos/CSS3.svg"
+            alt="CSS3 logo"
+            id="css-logo-blur"
+          />
+        </div>
+        <div id="python-logo-container">
+          <img
+            class="qualifications-logo"
+            src="images/logos/Python.svg"
+            alt="Python logo"
+            id="python-logo"
+          />
+          <div class="qualifications-text" id="qualifications-python-text">
+            I have used Python to build algorithims, and encryption software
+          </div>
+          <img
+            class="qualifications-logo"
+            src="images/logos/Python.svg"
+            alt="Python logo"
+            id="python-logo-blur"
+          />
+        </div>
+      </div>
+
+      <div id="excperience">
+        <div id="excperience-header">Work Experience</div>
+        <div id="excperience-text">
+          I served as a paperboy for VG, Norway's leading newspaper, for
+          approximately 1.5 years. This experience honed my time management
+          skills, responsibility, and dedication to delivering exceptional
+          service
+        </div>
+      </div>
+      <div id="road-image-container">
+        <img
+          class="road-image"
+          src="images/road.gif"
+          alt="Nighttime long exposure image of road"
+          id="road-image"
+        />
+        <!-- Blured background of road.jpg -->
+        <!-- <img
+        src="images/road.jpg"
+        alt="Nighttime long exposure image of road's background thats blurred"
+        id="road-image-blur"
+      /> -->
+      </div>
+    </div>
+    <footer id="footer">
+      <div id="footer-content">
+        <div id="copyright">&copy; 2024 AndreasHU. All rights reserved.</div>
+        <div id="contact-info">
+          Contact:
+          <a href="mailto:and0708@skole.vtfk.no">and0708@skole.vtfk.no</a>
+        </div>
+      </div>
+    </footer>
     <script src="app.js"></script>
   </body>
 </html>

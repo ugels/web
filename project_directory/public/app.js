@@ -1,4 +1,3 @@
-// -------------------------App.js---------------------------------------
 const socket = io("https://ugels.com/", { transports: ["websocket"] });
 // Handling connection errors
 socket.on("connect_error", (error) => {
@@ -14,35 +13,99 @@ socket.on("disconnect", () => {
   console.log("Disconnected from the server");
 });
 
+window.onload = function () {
+  // displayabout();
+  displayhome();
+  hideswitch();
+};
 
+// Variable defining:
+let currentLanguage = "en";
 
-// document.addEventListener('DOMContentLoaded', function() {
-//   document.getElementById('orderForm').addEventListener('submit', function(e) {
-//       e.preventDefault();
-      
-//       var formData = new FormData(e.target);
-//       var data = {};
-      
-//       formData.forEach((value, key) => {
-//           data[key] = value;
-//       });
-      
-//       fetch('https://script.google.com/macros/s/AKfycbxmLguEHxFY3LDjKpH_g2hX7dRAbJJYgAaUMyotfFnbMXSNZw2o_y_GRrSFQMkoST18YQ/exec', {
-//           method: 'POST',
-//           body: JSON.stringify(data),
-//           headers: {
-//               'Content-Type': 'application/json'
-//           },
-//           mode: 'no-cors' // Ensure CORS mode is specified
-//       })
-//       .then(response => response.json())
-//       .then(result => {
-//           console.log('Success:', result);
-//           alert('Order sent successfully!');
-//       })
-//       .catch(error => {
-//           console.error('Error:', error);
-//           alert('There was an error sending your order.');
-//       });
-//   });
+// Functions:
+document.documentElement.setAttribute("data-theme", "dark");
+function hideswitch() {
+  document.getElementById("theme-changer").style.display = "none";
+  document.getElementById("sww").style.display = "none";
+}
+
+function changetheme() {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  const newTheme = currentTheme === "light" ? "dark" : "light";
+
+  // Update the data-theme attribute
+  document.documentElement.setAttribute("data-theme", newTheme);
+}
+
+function toggleLanguage() {
+  if (currentLanguage === "en") {
+    currentLanguage = "no";
+  } else {
+    currentLanguage = "en";
+  }
+  console.log(currentLanguage);
+  // updateLanguageButton();
+}
+
+function hideflags() {
+  document.getElementById("language").style.display = "none";
+}
+
+function homeclicked() {
+  console.log("Homeclicked - Received");
+  displayhome();
+}
+function aboutclicked() {
+  console.log("Aboutclicked - Received");
+  displayabout();
+}
+function projectsclicked() {
+  console.log("Projectsclicked - Received");
+  displayprojects();
+}
+function qualificationsclicked() {
+  console.log("qualificationsclicked - Received");
+  displayqualifications();
+}
+
+function displayhome() {
+  console.log("Displayhome - Received");
+  document.getElementById("home-screen").style.display = "block";
+  document.getElementById("about-screen").style.display = "none";
+  document.getElementById("projects-screen").style.display = "none";
+  document.getElementById("qualifications-screen").style.display = "none";
+  window.scrollTo(0, 0);
+}
+function displayabout() {
+  console.log("Displayabout - Received");
+  document.getElementById("home-screen").style.display = "none";
+  document.getElementById("about-screen").style.display = "block";
+  document.getElementById("projects-screen").style.display = "none";
+  document.getElementById("qualifications-screen").style.display = "none";
+  window.scrollTo(0, 0);
+}
+function displayprojects() {
+  console.log("Displayprojects - Received");
+  document.getElementById("home-screen").style.display = "none";
+  document.getElementById("about-screen").style.display = "none";
+  document.getElementById("projects-screen").style.display = "block";
+  document.getElementById("qualifications-screen").style.display = "none";
+  window.scrollTo(0, 0);
+}
+function displayqualifications() {
+  console.log("Displayqualifications - Received");
+  document.getElementById("home-screen").style.display = "none";
+  document.getElementById("about-screen").style.display = "none";
+  document.getElementById("projects-screen").style.display = "none";
+  document.getElementById("qualifications-screen").style.display = "block";
+  window.scrollTo(0, 0);
+}
+// window.addEventListener("scroll", function () {
+//   var header = document.getElementById("header");
+//   if (window.scrollY > 0) {
+//     header.style.backgroundColor = "rgba(7, 8, 8, 0.9)"; // Adjust the opacity as needed
+//     document.getElementById("footer").style.zIndex = "12";
+//   } else {
+//     header.style.backgroundColor = "rgba(7, 8, 8, 1)"; // Fully opaque when at the top
+//   }
 // });
