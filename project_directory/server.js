@@ -1,3 +1,4 @@
+// Import necessary modules
 const {
   express,
   https,
@@ -6,33 +7,37 @@ const {
   fs,
   corsOptions,
 } = require("./loadModules");
+
+const path = require("path");
+const cookieParser = require("cookie-parser");
+
 // Load SSL certificate and key files
 const options = {
   key: fs.readFileSync("cert/ugels.com_key.key"), // Path to your private key
   cert: fs.readFileSync("cert/ugels.com.crt"), // Path to your certificate
   ca: fs.readFileSync("cert/ugels.com.ca-bundle"), // Path to your CA bundle
 };
-const path = require("path");
-// Main app setup
+
+// Main Express app setup
 const app = express();
-console.log("\x1b[32m%s\x1b[0m", "express connected to app successfully");
+console.log("\x1b[32m%s\x1b[0m", "Express connected to app successfully");
 
-const server = https.createServer(options, app); // Use HTTPS server
-console.log("\x1b[32m%s\x1b[0m", "app loaded successfully");
+const server = https.createServer(options, app); // Create HTTPS server
+console.log("\x1b[32m%s\x1b[0m", "App loaded successfully");
 
-const io = socketIO(server);
-console.log("\x1b[32m%s\x1b[0m", "io loaded successfully");
+const io = socketIO(server); // Attach Socket.IO to server
+console.log("\x1b[32m%s\x1b[0m", "Socket.IO loaded successfully");
 
 app.use(express.static("public"));
 app.use(cors(corsOptions));
 
-// Admin app setup
+// Admin Express app setup
 const adminApp = express();
-console.log("\x1b[32m%s\x1b[0m", "express connected to adminApp successfully");
+console.log("\x1b[32m%s\x1b[0m", "Express connected to adminApp successfully");
 
-const adminServer = https.createServer(options, adminApp); // Use HTTPS server for admin
-const adminIo = socketIO(adminServer);
-console.log("\x1b[32m%s\x1b[0m", "admin io loaded successfully");
+const adminServer = https.createServer(options, adminApp); // Create HTTPS server for admin
+const adminIo = socketIO(adminServer); // Attach Socket.IO to admin server
+console.log("\x1b[32m%s\x1b[0m", "Admin Socket.IO loaded successfully");
 
 adminApp.use(express.static("admin_public"));
 adminApp.use(cors(corsOptions));
@@ -42,14 +47,17 @@ const PORT = process.env.PORT || 25565;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-// Start the admin server on port 26002
+
+// Start the admin server on port 26001
 const ADMIN_PORT = process.env.ADMIN_PORT || 26001;
 adminServer.listen(ADMIN_PORT, () => {
   console.log(`Admin server is running on port ${ADMIN_PORT}`);
 });
 
+// Initialize data structures
 let connection = {};
 let connected_users = [];
+
 // Socket.IO connection handling for the main app
 io.on("connection", (socket) => {
   connection[socket.id] = {
@@ -59,9 +67,9 @@ io.on("connection", (socket) => {
     status: "Connected",
     IsAdminSession: false,
   };
+
   const originalTime = socket.handshake.time;
   const originalDate = new Date(originalTime);
-
   const formattedTime = originalDate.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
@@ -70,9 +78,7 @@ io.on("connection", (socket) => {
 
   console.log(
     formattedTime,
-    `A user connected with socket ID: ${
-      socket.id
-    } and their ip address is ${socket.handshake.address.replace(/^.*:/, "")}`
+    `A user connected with socket ID: ${socket.id} and their IP address is ${socket.handshake.address.replace(/^.*:/, "")}`
   );
 
   connected_users.push({ socketId: socket.id });
@@ -95,14 +101,19 @@ io.on("connection", (socket) => {
     connection[socket.id].status = "disconnected";
   });
 });
+
+// Load admin user data from JSON file
+let admins = [];
 try {
-  // Read user data from the JSON file
   const adminData = fs.readFileSync("admins.json", "utf-8");
   admins = JSON.parse(adminData);
 } catch (err) {
   console.error("Error reading Admin user data:", err);
 }
+
+// Alphabet letters for key generation
 const letters = "abcdefghijklmnopqrstuvwxyz";
+
 // Socket.IO connection handling for the admin app
 adminIo.on("connection", (socket) => {
   connection[socket.id] = {
@@ -115,27 +126,23 @@ adminIo.on("connection", (socket) => {
 
   const originalTime = socket.handshake.time;
   const originalDate = new Date(originalTime);
-
   const formattedTime = originalDate.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
   });
 
+  socket.emit("getkey");
+
   socket.on("login", ({ username, password }) => {
-    console.log("Login recieved");
+    console.log("Login received");
     const admin = admins.find(
       (admin) => admin.username === username && admin.password === password
     );
     if (admin) {
       console.log(
         formattedTime,
-        `An admin connected with socket ID: ${
-          socket.id
-        } and their ip address is ${socket.handshake.address.replace(
-          /^.*:/,
-          ""
-        )}`
+        `An admin connected with socket ID: ${socket.id} and their IP address is ${socket.handshake.address.replace(/^.*:/, "")}`
       );
       connected_users.push({ socketId: socket.id });
       console.log(
@@ -143,91 +150,50 @@ adminIo.on("connection", (socket) => {
         "Connected users (including admin):",
         connected_users.length
       );
-      socket.emit("login_response", { success: true });
-      const array = new Uint8Array(32);
 
+      socket.emit("login_response", { success: true });
+
+      // Generate a random key for the session
+      const array = new Uint8Array(32);
       crypto.getRandomValues(array);
 
-      connection[socket.id].key = "";
-      Array.from(array).forEach((byte) => {
-        if (byte % 2 === 0) {
-          connection[socket.id].key += byte % 10;
-        } else {
-          connection[socket.id].key += letters.charAt(byte % letters.length);
-        }
-      });
+      connection[socket.id].key = Array.from(array)
+        .map((byte) => (byte % 2 === 0 ? byte % 10 : letters.charAt(byte % letters.length)))
+        .join("");
+
       socket.emit("key", connection[socket.id].key);
-      const htmlFilePath = path.join(
-        __dirname,
-        "admin_restricted",
-        "dashboard.html"
-      );
-      fs.readFile(htmlFilePath, "utf-8", (err, htmlData) => {
-        if (err) {
-          console.error("Error reading HTML file:", err);
-          socket.emit("html_error", "Failed to load the dashboard.");
-          return;
-        }
+      admin.usedkeys.push(connection[socket.id].key);
 
-        // Extract the body content from the HTML
-        const bodyContent = htmlData.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-        if (bodyContent && bodyContent[1]) {
-          // Read the JavaScript file content
-          const jsFilePath = path.join(
-            __dirname,
-            "admin_restricted",
-            "dashboard.js"
-          );
-          fs.readFile(jsFilePath, "utf-8", (err, jsData) => {
-            if (err) {
-              console.error("Error reading JavaScript file:", err);
-              socket.emit("html_error", "Failed to load the dashboard script.");
-              return;
-            }
+      // Optionally, save the updated admins array back to the file
+      fs.writeFileSync("admins.json", JSON.stringify(admins, null, 2), "utf-8");
 
-            // Send both HTML body content and JavaScript code to the client
-            socket.emit("load_content", {
-              html: bodyContent[1],
-              script: jsData,
-            });
-          });
-        } else {
-          socket.emit("html_error", "No body content found in the HTML file.");
-        }
-      });
-      socket.on("fetchuserdata", (id, receivedkey) => {
-        if (connection[socket.id].key === receivedkey) {
-          console.log("Key Matches")
-          fetch(
-            "https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=252490&key=834AD1B9022BD5BBB397ACA706F926DC&steamid=76561198404326392",
-            {
-              method: "GET",
-            }
-          )
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              try {
-                const playerStats = data.playerstats;
-                console.log(playerStats);
-              } catch (error) {
-                console.error("Error processing data:", error);
-              }
-            })
-            .catch((error) => {
-              console.error("Error fetching data:", error);
-            });
-        } else {
-          socket.emit("WrongKey", "fetchuserdata")
-        }
-      });
+      printDashboard(socket, "admin_restricted");
+
+      socket.emit("setkey", connection[socket.id].key);
     } else {
-      // Invalid username or password
+      console.log("Invalid username or password");
       socket.emit("login_response", { success: false });
+    }
+  });
+
+  socket.on("savedkey", (receivedKey) => {
+    if (!receivedKey) {
+      handleNullOrUndefinedKey();
+      return;
+    }
+
+    const isKeyUsed = admins.some(item => item.usedkeys.includes(receivedKey));
+    if (isKeyUsed) {
+      console.log(`${receivedKey} is found in the used keys`);
+      connection[socket.id].key = receivedKey;
+
+      socket.emit("login_response", { success: true });
+      socket.emit("key", connection[socket.id].key);
+      socket.emit("setkey", connection[socket.id].key);
+
+      printDashboard(socket, "admin_restricted");
+    } else {
+      console.log(`${receivedKey} is not found in the used keys`);
     }
   });
 
@@ -252,3 +218,44 @@ adminIo.on("connection", (socket) => {
     connection[socket.id].status = "disconnected";
   });
 });
+
+// Helper function to handle null or undefined keys
+function handleNullOrUndefinedKey() {
+  console.log("The key is null or undefined. Please provide a valid key.");
+}
+
+// Helper function to load and send dashboard HTML and JS to the client
+function printDashboard(socket, providedPath) {
+  if (!providedPath) {
+    console.log("Provided path is null or undefined.");
+    return false;
+  }
+
+  const htmlFilePath = path.join(__dirname, providedPath, "dashboard.html");
+  fs.readFile(htmlFilePath, "utf-8", (err, htmlData) => {
+    if (err) {
+      console.error("Error reading HTML file:", err);
+      socket.emit("html_error", "Failed to load the dashboard.");
+      return;
+    }
+
+    const bodyContent = htmlData.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+    if (bodyContent && bodyContent[1]) {
+      const jsFilePath = path.join(__dirname, providedPath, "dashboard.js");
+      fs.readFile(jsFilePath, "utf-8", (err, jsData) => {
+        if (err) {
+          console.error("Error reading JavaScript file:", err);
+          socket.emit("html_error", "Failed to load the dashboard script.");
+          return;
+        }
+
+        socket.emit("load_content", {
+          html: bodyContent[1],
+          script: jsData,
+        });
+      });
+    } else {
+      console.log("No body found in the HTML file.");
+    }
+  });
+}
