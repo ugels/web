@@ -3,24 +3,22 @@
 <html lang="en" style="background-color: rgb(7, 8, 8)">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
-    <html lang="en"></html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ugels</title>
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
     <link
       rel="icon"
       type="image/x-icon"
       href="/img/favicon.svg"
       sizes="16x16"
     />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <!-- Header is permanent unless hidden with javascript and will therefore always be shown -->
@@ -29,7 +27,6 @@
       <!-- <div id="logo">AHU</div> Temp removed -->
       <!-- Myname is my name so in this case it will be Andreas Høiås Ugelstad, this way i can change and move it around seperatly -->
       <div id="myname">Ugels.com</div>
-      <button id="theme-changer" onclick="changetheme()">Change theme</button>
       <!-- Navbar is for navigating around the page, right now the website starts at home-screen everything will be linked with javascript -->
       <div id="navbar">
         <button id="navbar-home" onclick="homeclicked()">Home</button>
@@ -307,7 +304,7 @@
           <video
             class="project-video"
             id="hbs-video"
-            src="videos/HBS.mp4"
+            src=""
             controls
           ></video>
           <div id="hbs-text">
@@ -327,7 +324,7 @@
           <video
             class="project-video"
             id="mms-video"
-            src="videos/MMS.mp4"
+            src=""
             controls
           ></video>
           <div id="mms-text">

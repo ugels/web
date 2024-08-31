@@ -1,4 +1,4 @@
-const socket = io("https://ugels.com/", { transports: ["websocket"] });
+const socket = io("https://ugels.com", { transports: ["websocket"] });
 // Handling connection errors
 socket.on("connect_error", (error) => {
   console.error("Error connecting to the server:", error.message);
@@ -16,7 +16,6 @@ socket.on("disconnect", () => {
 window.onload = function () {
   // displayabout();
   displayhome();
-  hideswitch();
 };
 
 // Variable defining:
@@ -24,10 +23,6 @@ let currentLanguage = "en";
 
 // Functions:
 document.documentElement.setAttribute("data-theme", "dark");
-function hideswitch() {
-  document.getElementById("theme-changer").style.display = "none";
-  document.getElementById("sww").style.display = "none";
-}
 
 function changetheme() {
   const currentTheme = document.documentElement.getAttribute("data-theme");
