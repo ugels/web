@@ -16,7 +16,7 @@ const socketIO = loadModule("socket.io");
 const cors = loadModule("cors");
 const fs = loadModule("fs");
 
-const corsOptions = { origin: "https://apinor.no" };
+const corsOptions = { origin: "" };
 if (!express || !http || !https || !socketIO || !cors || !fs) {
   console.error("One or more modules failed to load. Exiting...");
   process.exit(1);
